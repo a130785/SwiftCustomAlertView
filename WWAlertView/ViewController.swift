@@ -39,6 +39,7 @@ class ViewController: UIViewController,WWCustomAlertViewDelegate {
         debugPrint("Delegate: Button at position: \(buttonIndex) is clicked on alertView \(alertView.tag)")
     }
     
+    //自定义界面
     func createDemoView() -> UIView {
         let infoView = UIView.init(frame:CGRect(x:0, y:0, width:290, height:100))
         

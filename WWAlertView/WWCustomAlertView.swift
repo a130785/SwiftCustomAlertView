@@ -59,8 +59,8 @@ class WWCustomAlertView: UIView {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications();
 
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-//        NotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-//        NotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         return customAlertView!
     }
@@ -149,7 +149,7 @@ class WWCustomAlertView: UIView {
             for title in buttonTitles! {
                 let closeButton = UIButton(type: .custom)
                 closeButton.frame = CGRect(x: i * buttonWidth, y: container.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
-                closeButton.addTarget(self, action: #selector(customIOS7dialogButtonTouchUpInside(_:)), for: .touchUpInside)
+                closeButton.addTarget(self, action: #selector(customButtonTouchUpInside(_:)), for: .touchUpInside)
                 closeButton.tag = Int(i)
                 closeButton.setTitle(title, for: UIControlState())
                 closeButton.setTitleColor(UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1), for: UIControlState())
@@ -165,7 +165,7 @@ class WWCustomAlertView: UIView {
             for imgName in buttonImages! {
                 let closeButton = UIButton(type: .custom)
                 closeButton.frame = CGRect(x: i * buttonWidth, y: container.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
-                closeButton.addTarget(self, action: #selector(customIOS7dialogButtonTouchUpInside(_:)), for: .touchUpInside)
+                closeButton.addTarget(self, action: #selector(customButtonTouchUpInside(_:)), for: .touchUpInside)
                 closeButton.tag = Int(i)
                 
                 if Int(i) != (buttonImages!.count - 1) {
@@ -187,7 +187,7 @@ class WWCustomAlertView: UIView {
             for title in buttonTitles! {
                 let closeButton = UIButton(type: .custom)
                 closeButton.frame = CGRect(x: i * buttonWidth, y: container.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
-                closeButton.addTarget(self, action: #selector(customIOS7dialogButtonTouchUpInside(_:)), for: .touchUpInside)
+                closeButton.addTarget(self, action: #selector(customButtonTouchUpInside(_:)), for: .touchUpInside)
                 closeButton.tag = Int(i)
                 closeButton.setTitle(title, for: UIControlState())
                 closeButton.setImage(UIImage(named:buttonImages![Int(i)] ), for: UIControlState())
@@ -202,7 +202,7 @@ class WWCustomAlertView: UIView {
     }
     
     // Button has been touched
-    func customIOS7dialogButtonTouchUpInside(_ sender:AnyObject) {
+    func customButtonTouchUpInside(_ sender:AnyObject) {
         if alertDelegate != nil {
             alertDelegate?.customDialogButtonTouchUpInside(self, clickedButtonAtIndex: sender.tag)
             self.close()
