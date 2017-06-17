@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E898FA31EE4FA8700B2E02E /* WWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E898FA21EE4FA8700B2E02E /* WWAlertView.swift */; };
 		4EA002B51EDE75310092432B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA002B41EDE75310092432B /* AppDelegate.swift */; };
 		4EA002B71EDE75310092432B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA002B61EDE75310092432B /* ViewController.swift */; };
 		4EA002BA1EDE75310092432B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EA002B81EDE75310092432B /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E898FA21EE4FA8700B2E02E /* WWAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWAlertView.swift; sourceTree = "<group>"; };
 		4EA002B11EDE75310092432B /* WWAlertView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WWAlertView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EA002B41EDE75310092432B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EA002B61EDE75310092432B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				4EA002B41EDE75310092432B /* AppDelegate.swift */,
 				4EA002B61EDE75310092432B /* ViewController.swift */,
 				4EA002C61EDE93E40092432B /* WWCustomAlertView.swift */,
+				4E898FA21EE4FA8700B2E02E /* WWAlertView.swift */,
 				4EA002B81EDE75310092432B /* Main.storyboard */,
 				4EA002BB1EDE75310092432B /* Assets.xcassets */,
 				4EA002BD1EDE75310092432B /* LaunchScreen.storyboard */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EA002B71EDE75310092432B /* ViewController.swift in Sources */,
+				4E898FA31EE4FA8700B2E02E /* WWAlertView.swift in Sources */,
 				4EA002C71EDE93E40092432B /* WWCustomAlertView.swift in Sources */,
 				4EA002B51EDE75310092432B /* AppDelegate.swift in Sources */,
 			);
@@ -173,6 +177,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -223,6 +228,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -307,6 +313,7 @@
 				4EA002C51EDE75310092432B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

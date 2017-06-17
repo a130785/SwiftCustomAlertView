@@ -24,13 +24,20 @@ class ViewController: UIViewController,WWCustomAlertViewDelegate {
     //主线程
     func launchDialog() {
         
-        let alertView = WWCustomAlertView.initSharedWithFrame(prentFrame: CGRect.init(x: 20, y: 100, width: 300, height: 150))
+//        WWAlertView.showAlertViewController(target: self, title: "title", contentMsg: "message")
+//        WWAlertView.showTextFieldAlertController(target: self, title: "title", placeholderText: "placeholder text") { text in
+//            print("completion:\(text)")
+//        }
+        
+//        WWAlertView.showTopAffineViewDismissTime(time: 2, contentText: "网络异常", image: UIImage.init(named: "btn_warn_normal")!)
+        
+        let alertView = WWCustomAlertView.initSharedWithFrame()
         // Add some custom content to the alert view
         alertView.containerView = self.createDemoView()
         
         // Modify the parameters
-        alertView.buttonImages = ["icon_refuse","icon_answer"]
-        alertView.buttonTitles = ["拒绝","接听"]
+//        alertView.buttonImages = ["icon_refuse","icon_answer"]
+        alertView.buttonTitles = ["拒绝","接听","确定"]
         alertView.alertDelegate = self
         alertView.show()
     }

@@ -37,6 +37,9 @@ class WWCustomAlertView: UIView {
     fileprivate final let kCustomIOSAlertViewDefaultButtonSpacerHeight:CGFloat = 1
     fileprivate final let kCustomIOSAlertViewCornerRadius:CGFloat = 7
     
+    fileprivate final let kContainerViewWidth:Int = 300
+    fileprivate final let kContainerViewHeight:Int = 150
+    
     //
     var dialogView:UIView?     // Dialog's container view
     var containerView:UIView?  // Container within the dialog (place your ui elements here)
@@ -49,22 +52,15 @@ class WWCustomAlertView: UIView {
     fileprivate var buttonSpacerHeight:CGFloat = 0
     
     //初始化
-    static func initSharedWithFrame(prentFrame frame: CGRect) -> WWCustomAlertView {
+    static func initSharedWithFrame() -> WWCustomAlertView {
         if customAlertView == nil {
-            customAlertView = WWCustomAlertView.init(frame: frame)
+            customAlertView = WWCustomAlertView.init()
             customAlertView!.isHidden = false
             customAlertView!.backgroundColor = UIColor.clear
         }
-        
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications();
-
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
         return customAlertView!
     }
-    
+
     
     // 创建dialog view, 并且用动画打开
     func show() {
@@ -98,7 +94,7 @@ class WWCustomAlertView: UIView {
     func createContainerView() -> UIView {
         
         if containerView == nil{
-            containerView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
+            containerView = UIView.init(frame: CGRect(x: 0, y: 0, width: kContainerViewWidth, height: kContainerViewHeight))
         }
         
         let screenSize:CGSize = self.countScreenSize()
@@ -158,6 +154,7 @@ class WWCustomAlertView: UIView {
                 closeButton.layer.cornerRadius = kCustomIOSAlertViewCornerRadius
                 i = i + 1
                 container.addSubview(closeButton)
+                
             }
         }
         else if buttonImages!.count > 0 && buttonTitles == nil {   //  按键只有图片没有文字
@@ -173,7 +170,7 @@ class WWCustomAlertView: UIView {
                     lineView.backgroundColor = UIColor.groupTableViewBackground
                     closeButton.addSubview(lineView)
                 }
-                let image = UIImageView(image: UIImage(named: imgName))
+                let image = UIImageView.init(image:  UIImage(named: imgName), highlightedImage:  UIImage(named: imgName))
                 let width = image.frame.width
                 let height = image.frame.height
                 image.frame = CGRect(x: (buttonWidth - width)/2, y: (buttonHeight - height)/2, width: width, height: height)
@@ -190,7 +187,8 @@ class WWCustomAlertView: UIView {
                 closeButton.addTarget(self, action: #selector(customButtonTouchUpInside(_:)), for: .touchUpInside)
                 closeButton.tag = Int(i)
                 closeButton.setTitle(title, for: UIControlState())
-                closeButton.setImage(UIImage(named:buttonImages![Int(i)] ), for: UIControlState())
+                closeButton.setImage(UIImage(named:buttonImages![Int(i)] ), for: .highlighted)
+                closeButton.setImage(UIImage(named:buttonImages![Int(i)] ), for: .normal)
                 closeButton.setTitleColor(UIColor.init(red: 0.0, green: 0.5, blue: 1.0, alpha: 1), for: UIControlState())
                 closeButton.setTitleColor(UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: .highlighted)
                 closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -252,53 +250,6 @@ class WWCustomAlertView: UIView {
         return CGSize(width: screenWidth, height: screenHeight);
     }
 
-    
-    // Rotation changed
-    func changeOrientationForIOS8(_ notification:Notification) {
-        
-        let screenWidth = UIScreen.main.bounds.size.width
-        let screenHeight = UIScreen.main.bounds.size.height
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
-            let dialogSize = self.countDialogSize()
-            let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey]! as AnyObject).cgRectValue.size;
-            self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
-            self.dialogView!.frame = CGRect(x: (screenWidth - dialogSize.width) / 2, y: (screenHeight - keyboardSize.height - dialogSize.height) / 2, width: dialogSize.width, height: dialogSize.height);
-        }, completion: nil)
-    }
-    
-    //MARK: - NSNotification
-    func deviceOrientationDidChange(_ notification:Notification){
-        self.changeOrientationForIOS8(notification)
-    }
-    
-    // Handle keyboard show/hide changes
-    func keyboardWillShow(_ notification:Notification){
-        
-        let screenSize = self.countScreenSize()
-        let dialogSize = self.countDialogSize()
-        var keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
-        
-        let interfaceOrientation = UIApplication.shared.statusBarOrientation
-        if UIInterfaceOrientationIsLandscape(interfaceOrientation) && NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1 {
-            let tmp = keyboardSize.height;
-            keyboardSize.height = keyboardSize.width
-            keyboardSize.width = tmp
-        }
-        
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
-            self.dialogView!.frame = CGRect(x: (screenSize.width - dialogSize.width) / 2, y: (screenSize.height - keyboardSize.height - dialogSize.height) / 2, width: dialogSize.width, height: dialogSize.height)
-        }, completion: nil)
-    }
-    
-    func keyboardWillHide(_ notification:Notification){
-        let screenSize = self.countScreenSize()
-        let dialogSize = self.countDialogSize()
-        
-        UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {
-            self.dialogView!.frame = CGRect(x: (screenSize.width - dialogSize.width) / 2, y: (screenSize.height - dialogSize.height) / 2, width: dialogSize.width, height: dialogSize.height)
-        }, completion: nil)
-    }
-    
     deinit{
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.removeObserver(self)
